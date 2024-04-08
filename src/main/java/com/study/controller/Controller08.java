@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("main8")
@@ -69,5 +71,27 @@ public class Controller08 {
     public void method8(Model model) {
         model.addAttribute("numbers", List.of(500.0, 3.14));
         model.addAttribute("cities", List.of("서울", "런던", "뉴욕"));
+    }
+
+    @RequestMapping("sub9")
+    public void method9(Model model) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", "흥민");
+        map.put("age", "서른");
+        map.put("address", "런던");
+        model.addAttribute("myMap", map);
+    }
+
+    @RequestMapping("sub10")
+    public void method10(Model model) {
+        Map<String, String> names = Map.of("son", "tot",
+                "lee", "psg",
+                "kim", "fcb");
+        model.addAttribute("names", names);
+
+        Map<String, String> others = Map.of(
+                "hm", "london",
+                "ki", "paris");
+        model.addAttribute("others", others);
     }
 }
