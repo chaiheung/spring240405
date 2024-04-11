@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
     <title>Title</title>
@@ -17,7 +17,6 @@
             padding-top: 5px;
             padding-bottom: 5px;
         }
-
     </style>
 </head>
 <body>
@@ -25,7 +24,7 @@
 <table class="table">
     <thead>
     <tr>
-        <th>NO.</th>
+        <th>No.</th>
         <th>모델명</th>
         <th>회사</th>
         <th>국적</th>
