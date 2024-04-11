@@ -47,4 +47,36 @@ public class Controller12 {
     public void method3(Model model) {
         model.addAttribute("dan", 2);
     }
+
+    @RequestMapping("sub4")
+    public void method4(Model model) {
+        model.addAttribute("myList",
+                List.of("java", "css", "react"));
+        model.addAttribute("foods",
+                List.of("pizza", "burger", "찌개", "돈까스"));
+        model.addAttribute("myMap",
+                Map.of("son", "london",
+                        "lee", "paris",
+                        "kim", "munich"));
+        model.addAttribute("cars",
+                Map.of("tesla", "usa",
+                        "kia", "korea",
+                        "volvo", "sweden"));
+        model.addAttribute("myList2",
+                List.of("alpha", "beta", "gamma"));
+        model.addAttribute("myMap2",
+                Map.of("seoul", "korea",
+                        "beijing", "china",
+                        "tokyo", "japan"));
+    }
+
+    @RequestMapping("sub5")
+    public void method5(Model model) {
+        model.addAttribute("myList", List.of("java", "css", "react"));
+    }
+
+    @RequestMapping("sub6")
+    public void method6(Model model) {
+
+    }
 }
