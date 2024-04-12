@@ -45,17 +45,8 @@ public class Controller17 {
     }
 
     @RequestMapping("sub6")
-    public void sub6(Model model) {
-
-    }
-
-    @RequestMapping("sub7")
-    public void sub7(Model model) {
-
-    }
-
-    @RequestMapping("sub8")
-    public void sub8(Model model) {
-
+    public void sub6(HttpSession session) {
+        // session 만료
+        session.invalidate();
     }
 }
