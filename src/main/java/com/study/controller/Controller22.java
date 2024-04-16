@@ -144,4 +144,24 @@ public class Controller22 {
     @GetMapping("sub15")
     public void method15() {
     }
+
+    @GetMapping("sub16")
+    public void method16() {
+    }
+
+    @PostMapping("sub17")
+    public String method17(String id, String pw, RedirectAttributes rttr) {
+        boolean ok = id.equals(pw);
+        if (ok) {
+            rttr.addFlashAttribute("message", "성공");
+            return "redirect:/main22/sub18";
+        } else {
+            rttr.addFlashAttribute("message", "실패");
+            return "redirect:/main22/sub16";
+        }
+    }
+
+    @GetMapping("sub18")
+    public void method18() {
+    }
 }
