@@ -5,21 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<c:if test="${param.type eq 'fail'}">
-    <div style="padding: 20px; background-color: pink">
-        아이디와 패스워드를 확인하세요.
-    </div>
+<c:if test="${not empty message}">
+    <div style="padding: 20px; background-color: pink">${message}</div>
 </c:if>
-<%--form>div*2>input^div>input:s--%>
-<form action="/main22/sub4" method="post">
+<%--form>div*2>input--%>
+<form action="/main22/sub14" method="post">
     <div>
         id
         <input type="text" name="id">
     </div>
     <div>
         pw
-        <input type="text" name="password">
+        <input type="text" name="pw">
     </div>
+    <%--    div>input:s--%>
     <div>
         <input type="submit" value="로그인">
     </div>
