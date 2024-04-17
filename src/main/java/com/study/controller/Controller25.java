@@ -2,6 +2,7 @@ package com.study.controller;
 
 import com.study.domain.MyBean25A;
 import com.study.domain.MyBean25B;
+import com.study.domain.MyBean25C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 @Controller
@@ -78,5 +76,73 @@ public class Controller25 {
             list.add(product);
         }
         model.addAttribute("products", list);
+    }
+
+    @GetMapping("sub3")
+    public void method3(String search, Model model) throws SQLException {
+        String oldsql = STR."""
+                SELECT * FROM Products
+                WHERE ProductName = '\{search}'
+                """;
+        String sql = """
+                SELECT * FROM Products
+                WHERE ProductName = ?
+                """;
+
+        var list = new ArrayList<MyBean25B>();
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        // 첫번째 파라미터:물음표 위치
+        // 두번째 파라미터:넣을 값
+        pstmt.setString(1, search);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            MyBean25B row = new MyBean25B(rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(5),
+                    rs.getDouble(6));
+
+            list.add(row);
+        }
+        model.addAttribute("products", list);
+    }
+
+    @GetMapping("sub4")
+    public String method4(String search, Model model) throws SQLException {
+        String sql = "SELECT * FROM Customers WHERE CustomerName = ?";
+        var list = new ArrayList<MyBean25C>();
+
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, search);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        try (rs; conn; pstmt) {
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String contactName = rs.getString(3);
+                String address = rs.getString(4);
+                String city = rs.getString(5);
+                String postalCode = rs.getString(6);
+                String country = rs.getString(7);
+
+                MyBean25C obj = new MyBean25C();
+                obj.setId(id);
+                obj.setName(name);
+                obj.setContactName(contactName);
+                obj.setAddress(address);
+                obj.setCity(city);
+                obj.setPostalCode(postalCode);
+                obj.setCountry(country);
+
+                list.add(obj);
+            }
+        }
+        model.addAttribute("customerList", list);
+
+        return "main25/subC";
     }
 }
