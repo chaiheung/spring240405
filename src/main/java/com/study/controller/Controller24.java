@@ -67,4 +67,23 @@ public class Controller24 {
             }
         }
     }
+
+    @GetMapping("sub3")
+    public void method3(Model model) throws Exception {
+        var list = new ArrayList<String>();
+        String sql = """
+                SELECT DISTINCT Country
+                FROM Customers
+                """;
+        Connection conn = dataSource.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        try (conn; stmt; rs) {
+            while (rs.next()) {
+                list.add(rs.getString(1));
+            }
+            model.addAttribute("countryList", list);
+        }
+    }
 }
