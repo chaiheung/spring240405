@@ -3,6 +3,7 @@ package com.study.controller;
 import com.study.domain.MyBean25A;
 import com.study.domain.MyBean25B;
 import com.study.domain.MyBean25C;
+import com.study.domain.MyBean25P;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -145,5 +146,80 @@ public class Controller25 {
         model.addAttribute("prevSearch", search);
 
         return "main25/subC";
+    }
+
+    @GetMapping("sub5")
+    public String method5(String search, Model model) throws SQLException {
+        var list = new ArrayList<MyBean25C>();
+        String sql = """
+                SELECT * FROM Customers WHERE CustomerName LIKE ?
+                """;
+        String keyword = "%" + search + "%";
+
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, keyword);
+        ResultSet rs = pstmt.executeQuery();
+        try (rs; conn; pstmt) {
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String contactName = rs.getString(3);
+                String address = rs.getString(4);
+                String city = rs.getString(5);
+                String postalCode = rs.getString(6);
+                String country = rs.getString(7);
+
+                MyBean25C obj = new MyBean25C();
+                obj.setId(id);
+                obj.setName(name);
+                obj.setContactName(contactName);
+                obj.setAddress(address);
+                obj.setCity(city);
+                obj.setPostalCode(postalCode);
+                obj.setCountry(country);
+
+                list.add(obj);
+            }
+        }
+        model.addAttribute("customerList", list);
+        model.addAttribute("prevSearch", search);
+
+        return "main25/subC";
+    }
+
+    @GetMapping("sub6")
+    public String method6(String search, Model model) throws SQLException {
+        var list = new ArrayList<MyBean25P>();
+        String sql = """
+                SELECT * FROM Products WHERE ProductName LIKE ?
+                """;
+        String keyword = "%" + search + "%";
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, keyword);
+        ResultSet rs = pstmt.executeQuery();
+        try (rs; conn; pstmt) {
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                int sid = rs.getInt(3);
+                int cid = rs.getInt(4);
+                String unit = rs.getString(5);
+                double price = rs.getDouble(6);
+
+                MyBean25P obj = new MyBean25P();
+                obj.setId(id);
+                obj.setName(name);
+                obj.setSid(sid);
+                obj.setCid(cid);
+                obj.setUnit(unit);
+                obj.setPrice(price);
+                list.add(obj);
+            }
+        }
+        model.addAttribute("productList", list);
+        model.addAttribute("prevSearch", search);
+        return "main25/subP";
     }
 }
