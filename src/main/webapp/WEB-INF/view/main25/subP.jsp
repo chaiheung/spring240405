@@ -15,14 +15,32 @@
     </style>
 </head>
 <body>
-<h3>상품 목록</h3>
-<%-- action 의 값이 없거나 생략되면 현재 요청 경로로 보냄--%>
+<h3>상품 조회</h3>
 <form>
-    이름
-    <input value="${prevSearch}" type="text" placeholder="조회할 상품 이름을 입력하세요." name="search">
-    <%--    form 내의 button은 submit 역할--%>
+    <input value="${prevSearch}" type="text" name="search" placeholder="조회할 상품명 입력">
+    <%--    form 내의 button 요소는 submit 버튼 역할함 --%>
     <button>조회</button>
-    <%--    <input type="submit" value="조회">--%>
+</form>
+<hr>
+<form>
+    카테고리 선택
+    <div>
+        <select name="category" multiple>
+            <c:forEach items="${categoryList}" var="category">
+                <c:set value="false" var="selected"></c:set>
+                <c:forEach items="${prevCategorySelect}" var="prevSelect">
+                    <c:if test="${category.id == prevSelect}">
+                        <c:set var="selected" value="true"></c:set>
+                    </c:if>
+                </c:forEach>
+
+                <option ${selected ? "selected" : ""} value="${category.id}">${category.name}</option>
+            </c:forEach>
+        </select>
+    </div>
+    <div>
+        <button>조회</button>
+    </div>
 </form>
 <hr>
 
