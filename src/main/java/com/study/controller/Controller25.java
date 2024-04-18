@@ -1,9 +1,6 @@
 package com.study.controller;
 
-import com.study.domain.MyBean25A;
-import com.study.domain.MyBean25B;
-import com.study.domain.MyBean25C;
-import com.study.domain.MyBean25P;
+import com.study.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -237,7 +234,6 @@ public class Controller25 {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, keyword);
         pstmt.setString(2, keyword);
-
         ResultSet rs = pstmt.executeQuery();
 
         try (rs; conn; pstmt) {
@@ -257,4 +253,37 @@ public class Controller25 {
         model.addAttribute("prevSearch", search);
         return "main25/subC";
     }
+
+    @GetMapping("sub8")
+    public String method8(String search, Model model) throws SQLException {
+        var list = new ArrayList<MyBean25E>();
+        String sql = """
+                SELECT *
+                FROM Employees
+                WHERE LastName LIKE ?
+                   OR FirstName LIKE ?
+                """;
+        Connection conn = dataSource.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, "%" + search + "%");
+        pstmt.setString(2, "%" + search + "%");
+        ResultSet rs = pstmt.executeQuery();
+
+        try (rs; conn; pstmt) {
+            while (rs.next()) {
+                MyBean25E obj = new MyBean25E();
+                obj.setId(rs.getInt(1));
+                obj.setLastName(rs.getString(2));
+                obj.setFirstName(rs.getString(3));
+                obj.setBirthDate(rs.getString(4));
+                obj.setPhoto(rs.getString(5));
+                obj.setNotes(rs.getString(6));
+                list.add(obj);
+            }
+        }
+        model.addAttribute("employeeList", list);
+        model.addAttribute("prevSearch", search);
+        return "main25/subE";
+    }
+
 }
