@@ -127,6 +127,7 @@ public class Controller26 {
                     SELECT *
                     FROM Products
                     WHERE CategoryID IN (\{qm})
+                    ORDER BY CategoryID, Price
                     """;
             PreparedStatement pstmt = conn.prepareStatement(productSql);
             for (int i = 0; i < cat.length; i++) {
