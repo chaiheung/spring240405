@@ -1,6 +1,7 @@
 package com.study.controller;
 
 import com.study.domain.MyBean25C;
+import com.study.domain.MyBean25E;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,18 +51,18 @@ public class Controller27 {
         int endPageNumber = (((page - 1) / 10) + 1) * 10;
         int beginPageNumber = endPageNumber - 9;
 
-        // endPageNumber 가 최종페이지를 넘을 순 없다.
+        // endPageNumber 가 최종 페이지 초과 x
         endPageNumber = Math.min(endPageNumber, lastPageNumber);
         model.addAttribute("beginPageNumber", beginPageNumber);
         model.addAttribute("endPageNumber", endPageNumber);
 
-        // 다음 버튼 클릭 시 이동해야 하는 page 산출
+        // 다음 버튼 클릭 시 이동해야 하는 nextPageNumber 산출
         int nextPageNumber = beginPageNumber + 10;
         if (nextPageNumber <= lastPageNumber) {
             model.addAttribute("nextPageNumber", nextPageNumber);
         }
 
-        // 이전 버튼 클릭 시 이동해야 하는 페이지 prevPageNumber 산출
+        // 이전 버튼 클릭 시 이동해야 하는 prevPageNumber 산출
         int prevPageNumber = beginPageNumber - 10;
         if (prevPageNumber >= 1) {
             model.addAttribute("prevPageNumber", prevPageNumber);
@@ -69,7 +70,7 @@ public class Controller27 {
 
         // 현재 페이지
         model.addAttribute("currentPage", page);
-        
+
         // 고객 레코드 조회
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, offset);
@@ -93,5 +94,68 @@ public class Controller27 {
         }
 
         return "main27/sub1";
+    }
+
+    @GetMapping("sub2")
+    public String sub2(@RequestParam(defaultValue = "1") Integer page, Model model) throws SQLException {
+        int offset = (page - 1) * 10;
+        String sql = """
+                SELECT *
+                FROM Employees
+                ORDER BY EmployeeID
+                LIMIT ?, 10
+                """;
+
+        var list = new ArrayList<MyBean25E>();
+        Connection conn = dataSource.getConnection();
+
+        String countSql = "SELECT COUNT(*) FROM Employees";
+        Statement stmt = conn.createStatement();
+        ResultSet rs1 = stmt.executeQuery(countSql);
+        int total = 0;
+        try (rs1; stmt;) {
+            if (rs1.next()) {
+                total = rs1.getInt(1);
+            }
+        }
+
+        int lastPageNumber = (total - 1) / 10 + 1;
+        model.addAttribute("lastPageNumber", lastPageNumber);
+        int endPageNumber = (((page - 1) / 10) + 1) * 10;
+        int beginPageNumber = endPageNumber - 9;
+        endPageNumber = Math.min(endPageNumber, lastPageNumber);
+        model.addAttribute("beginPageNumber", beginPageNumber);
+        model.addAttribute("endPageNumber", endPageNumber);
+
+        int nextPageNumber = beginPageNumber + 10;
+        if (nextPageNumber <= lastPageNumber) {
+            model.addAttribute("nextPageNumber", nextPageNumber);
+        }
+        int prevPageNumber = beginPageNumber - 10;
+        if (prevPageNumber >= 1) {
+            model.addAttribute("prevPageNumber", prevPageNumber);
+        }
+        model.addAttribute("currentPage", page);
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, offset);
+        ResultSet rs = ps.executeQuery();
+
+        try (rs; ps; conn) {
+            while (rs.next()) {
+                MyBean25E employee = new MyBean25E();
+                employee.setId(rs.getInt(1));
+                employee.setLastName(rs.getString(2));
+                employee.setFirstName(rs.getString(3));
+                employee.setBirthDate(rs.getString(4));
+                employee.setPhoto(rs.getString(5));
+                employee.setNotes(rs.getString(6));
+                list.add(employee);
+            }
+
+            model.addAttribute("employeeList", list);
+        }
+
+        return "main27/sub2";
     }
 }
