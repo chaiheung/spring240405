@@ -41,5 +41,29 @@
     </c:forEach>
     </tbody>
 </table>
+<div>
+    <c:if test="${not empty prevPageNumber}">
+        <c:url var="link" value="/main27/sub1">
+            <c:param name="page" value="${prevPageNumber}"/>
+        </c:url>
+        <span>
+            <a href="${link}">이전</a>
+        </span>
+    </c:if>
+    <c:forEach begin="${beginPageNumber}" end="${endPageNumber}" var="pageNumber">
+        <c:url var="link" value="/main27/sub1">
+            <c:param name="page" value="${pageNumber}"/>
+        </c:url>
+        <span>
+            <a href="${link}">${pageNumber}</a>
+        </span>
+    </c:forEach>
+    <c:if test="${not empty nextPageNumber}">
+        <c:url var="link" value="/main27/sub1">
+            <c:param name="page" value="${nextPageNumber}"/>
+        </c:url>
+        <span><a href="${link}">다음</a></span>
+    </c:if>
+</div>
 </body>
 </html>
