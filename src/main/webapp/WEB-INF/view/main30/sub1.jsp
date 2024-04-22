@@ -46,10 +46,16 @@
         국가
         <input type="text" name="country" value="${customer.country}">
     </div>
-    <div>
-        <input type="submit" value="수정">
-    </div>
+    <form action="/main30/sub2/update" method="post" onsubmit="return confirm('정말 수정하시겠습니까?')">
+        <div style="display: none">
+            <input type="text" name="id" value="${customer.id}">
+        </div>
+        <div>
+            <button style="background-color: rosybrown">
+                수정
+            </button>
+        </div>
+    </form>
 </form>
-
 </body>
 </html>
