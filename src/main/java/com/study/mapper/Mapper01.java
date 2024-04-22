@@ -1,12 +1,14 @@
 package com.study.mapper;
 
 import com.study.domain.MyBean25C;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Component
 public class Mapper01 {
     public MyBean25C getCustomerById(Integer id) throws Exception {
         if (id != null) {
