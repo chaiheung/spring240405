@@ -50,7 +50,7 @@
         국가
         <input type="text" readonly value="${customer.country}">
     </div>
-    <form action="/main29/sub1/delete" method="post">
+    <form action="/main29/sub1/delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?')">
         <div style="display: none">
             <input type="text" name="id" value="${customer.id}">
         </div>

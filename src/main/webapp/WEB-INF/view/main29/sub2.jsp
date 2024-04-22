@@ -45,7 +45,7 @@
         비고
         <textarea name="" id="" cols="30" rows="10" readonly>${employee.notes}</textarea>
     </div>
-    <form action="/main29/sub2/delete" method="post">
+    <form action="/main29/sub2/delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?')">
         <div style="display: none">
             <input type="text" name="id" value="${employee.id}">
         </div>
