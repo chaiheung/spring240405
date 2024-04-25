@@ -82,4 +82,20 @@ public class Controller32 {
         rttr.addAttribute("id", employee.getId());
         return "redirect:/main32/sub6";
     }
+
+    @GetMapping("sub7")
+    public void method8(Integer id, Model model) {
+        if (id != null) {
+            MyBean25C c = mapper02.selectOneCustomer4(id);
+            model.addAttribute("customer", c);
+        }
+    }
+
+    @PostMapping("sub7/update")
+    public String method9(MyBean25C customer, RedirectAttributes rttr) {
+        mapper.updateCustomer(customer);
+
+        rttr.addAttribute("id", customer.getId());
+        return "redirect:/main32/sub7";
+    }
 }
