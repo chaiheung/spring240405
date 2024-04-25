@@ -70,7 +70,3 @@ VALUES (3, '7890');
 
 SELECT *
 FROM phone_number;
-
-# Second Normal Form (2NF, 제2정규화)
-
-# Third Normal Form (3NF, 제3정규화)
