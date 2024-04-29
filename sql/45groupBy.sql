@@ -55,3 +55,21 @@ FROM OrderDetails od
          JOIN Products p ON od.ProductID = p.ProductID
 GROUP BY o.CustomerID, p.ProductID
 ORDER BY o.CustomerID, 상품주문수 DESC;
+
+# 국가별-상품별 주문량 조회
+SELECT c.Country 국가, p.ProductName 상품명, SUM(Quantity) 수량
+FROM Products p
+         JOIN OrderDetails od ON p.ProductID = od.ProductID
+         JOIN Orders o ON od.OrderID = o.OrderID
+         JOIN Customers c ON o.CustomerID = c.CustomerID
+GROUP BY c.Country, p.ProductID
+ORDER BY 국가 ASC, 수량 DESC;
+
+# 상품별-국가별 주문량 조회
+SELECT c.Country 국가, p.ProductName 상품명, SUM(Quantity) 수량
+FROM Products p
+         JOIN OrderDetails od ON p.ProductID = od.ProductID
+         JOIN Orders o ON od.OrderID = o.OrderID
+         JOIN Customers c ON o.CustomerID = c.CustomerID
+GROUP BY c.Country, p.ProductID
+ORDER BY p.ProductID, 수량 DESC;
