@@ -1,9 +1,8 @@
-USE w3schools
+USE w3schools;
 
 # aggregate function : 집계함수
 # 평균, 합계, 갯수, 최댓값, 최솟값
 # NULL 값은 집계 제외
-
 
 
 # COUNT : 갯수
