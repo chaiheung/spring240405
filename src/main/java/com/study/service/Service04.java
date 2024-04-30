@@ -52,4 +52,7 @@ public class Service04 {
     }
 
 
+    public void action7() {
+        mapper.query7();
+    }
 }

@@ -23,5 +23,5 @@ public interface Mapper07 {
             VALUES(#{name},#{country})
             """)
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(MyBean25C c);
+    int insert2(MyBean25C c);
 }

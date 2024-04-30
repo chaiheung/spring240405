@@ -88,4 +88,14 @@ public interface Mapper08 {
                         </script>          
             """)
     List<MyBean25E> query6(String keyword);
+
+    @Select("""
+            <script>
+            <![CDATA[
+            SELECT * FROM Products
+            WHERE Price < 5
+            ]]>
+            </script>
+            """)
+    Object query7();
 }

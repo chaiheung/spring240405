@@ -43,6 +43,10 @@ public class Controller37 {
             @RequestParam(value = "q", defaultValue = "")
             String keyword) {
         service.action6(keyword);
+    }
 
+    @GetMapping("sub7")
+    public void method7() {
+        service.action7();
     }
 }

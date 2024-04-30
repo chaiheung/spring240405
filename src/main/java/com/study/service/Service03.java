@@ -25,7 +25,7 @@ public class Service03 {
         MyBean25C c = new MyBean25C();
         c.setName("손흥민");
         c.setCountry("대한민국");
-        mapper.insert(c);
+        mapper.insert2(c);
         System.out.println(c.getId());
     }
 }
