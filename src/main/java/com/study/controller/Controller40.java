@@ -15,4 +15,16 @@ public class Controller40 {
     public void method2() {
         System.out.println("Controller40.method2");
     }
+
+    // /api/someurl2 연습
+
+    @GetMapping("/api/someurl2")
+    public void method3() {
+        System.out.println("Controller40.method3");
+    }
+
+    @PostMapping("/api/someurl2")
+    public void method4() {
+        System.out.println("Controller40.method4");
+    }
 }
